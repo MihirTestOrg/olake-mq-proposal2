@@ -256,3 +256,6 @@ Check out our [Bounty Program](https://olake.io/docs/community/issues-and-prs/#g
 <!-- proposal P3 helper -->
 <!-- proposal P5 -->
 <!-- proposal P3 helper -->
+<!-- proposal P2 -->
+<!-- proposal P3 helper -->
+<!-- proposal P3 helper -->
