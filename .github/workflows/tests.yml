@@ -43,7 +43,6 @@ jobs:
   # Runs on every event (it says "not redundant" outside the queue): a skipped job here would make
   # GitHub skip every later Tests job that relies on the implicit success() of its needs.
   queue-check:
-    if: github.event_name == 'merge_group'
     uses: ./.github/workflows/queue-check.yml
     permissions:
       contents: read
