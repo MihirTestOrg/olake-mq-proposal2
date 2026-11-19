@@ -1,0 +1,35 @@
+name: Merge Queue Check
+
+# Called first by every workflow that runs in the merge queue; the others skip their jobs when
+# it reports the entry redundant (the PR's checks passed and the merge group adds nothing).
+on:
+  workflow_call:
+    outputs:
+      redundant:
+        description: '"true" when every check of this merge group can be skipped.'
+        value: ${{ jobs.check.outputs.redundant }}
+
+jobs:
+  check:
+    name: Merge queue check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+      statuses: read
+    outputs:
+      redundant: ${{ steps.decide.outputs.redundant }}
+    steps:
+      - name: Checkout the decision script
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+
+      - name: Compare the merge group with its pull request
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GROUP_SHA: ${{ github.event.merge_group.head_sha }}
+          GROUP_REF: ${{ github.event.merge_group.head_ref }}
+        run: .github/scripts/queue-redundant.sh
