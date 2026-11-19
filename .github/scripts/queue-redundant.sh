@@ -14,7 +14,7 @@ decide() {
   gate=$(gh api "repos/$GITHUB_REPOSITORY/commits/$pr_head/status" \
     --jq '[.statuses[] | select(.context == "All Required Checks Passed")][0].state // "none"')
   echo "PR #$pr head ${pr_head:0:8} tree ${pr_tree:0:8}; group ${GROUP_SHA:0:8} tree ${group_tree:0:8}; gate $gate"
-  [ "$gate" = success ]
+  [ "$group_tree" = "$pr_tree" ] && [ "$gate" = success ]
 }
 
 if decide; then redundant=true; else redundant=false; fi
