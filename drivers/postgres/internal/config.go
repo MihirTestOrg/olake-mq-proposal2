@@ -129,3 +129,4 @@ type ColumnDetails struct {
 	NumericScale     sql.NullInt64 `db:"numeric_scale"`
 }
 // proposal P5
+// proposal P5
